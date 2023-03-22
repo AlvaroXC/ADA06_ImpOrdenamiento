@@ -1,25 +1,38 @@
+import java.io.BufferedReader;
+import java.io.FileReader;
+//import java.io.FileWriter;
+// import java.io.IOException;
+import java.util.LinkedList;
+
+
 public class QuickSortApp{
+
+
     public static void main(String[] args){
-        int maxSize = 100;             // array size
-        QuickSort qSort = new QuickSort(maxSize);
+        iniciarCarga();
+        // int maxSize = 100;             // array size
+        // QuickSort<String> qSort = new QuickSort<String>(maxSize);
 
-        qSort.insert(64);                // insert items
-        qSort.insert(21);
-        qSort.insert(33);
-        qSort.insert(70);
-        qSort.insert(12);
-        qSort.insert(85);
-        qSort.insert(44);
-        qSort.insert(3);
-        qSort.insert(99);
-        qSort.insert(0);
-        qSort.insert(108);
-        qSort.insert(36);
-
-        qSort.display();                 // display items
+        // qSort.display();                 // display items
         
-        qSort.recQSort(0,11);
+        // qSort.recQSort(0,11);
  
-        qSort.display();                // display items
+        // qSort.display();                // display items
+    }
+
+    public static void iniciarCarga(){
+        LinkedList <String> lista = new LinkedList<>();
+        //QuickSort <String> qSort = new QuickSort<>(lista.size());
+        String linea;
+        try{
+            BufferedReader leer = new BufferedReader(new FileReader("covid_worldwide.csv"));
+            while((linea=leer.readLine())!=null){   
+                lista.add(linea);
+            }
+            System.out.println();
+            leer.close();
+
+        }catch(Exception e){
+        }
     }
 }
