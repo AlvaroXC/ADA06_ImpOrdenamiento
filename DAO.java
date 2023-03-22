@@ -20,14 +20,16 @@ public class DAO {
                 fila[5].toString(), fila[6].toString(), fila[7].toString(), Integer.parseInt(fila[8]));
                 lista.add(auto);
             }
-            
-            for(int i=0; i<lista.size(); i++){
-                System.out.println(lista.get(i).getAnio()+" "+lista.get(i).getNombre());
-            }
             leer.close();
+            QuickSort qSort = new QuickSort(lista.size());
+            for (int i = 0; i < lista.size(); i++) {
+                qSort.insert(lista.get(i));
+            }
+            qSort.recQSort(0, lista.size()-1);
+            qSort.display();
 
         }catch(Exception e){
-            System.out.println(e);;
+            System.out.println(e);
         }
     }
 
