@@ -6,15 +6,25 @@ public class QuickSort{
     private Auto[] theArray;          // ref to array theArray
     private int nElems;               // number of data items
 
+    /**
+     * 
+     * @param max
+     */
     public QuickSort(int max){
       theArray = new Auto[max];      // create array
       nElems = 0;
     }
 
+    /**
+     * 
+     * @param value
+     */
+
     public void insert(Auto value){
       theArray[nElems] = value;      // insert it
       nElems++;                      // increment size
     }
+
 
     public void display() {
       for(int j=0; j<nElems; j++)    // for each element,
@@ -22,6 +32,11 @@ public class QuickSort{
       System.out.println("");
     }
 
+    /**
+     * 
+     * @param i
+     * @param j
+     */
     void swap(int i, int j){
         Auto temp = theArray[i];
         theArray[i] = theArray[j];
@@ -34,6 +49,13 @@ public class QuickSort{
     a la izquierda del pivote y coloca todos los valores mas grandes 
     (mayores a los pivotes) a la derecha del pivote 
     */
+
+    /**
+     * 
+     * @param low
+     * @param high
+     * @return
+     */
     int partition(int low, int high){
         
         int pivot = theArray[high].getAnio();
@@ -48,6 +70,13 @@ public class QuickSort{
         swap(i + 1, high);
         return (i + 1);
     }
+
+    /**
+     * 
+     * @param low
+     * @param high
+     * @return
+     */
     int partitionDescendente(int low, int high){
         
         int pivot = theArray[high].getAnio();
@@ -63,6 +92,12 @@ public class QuickSort{
         return (i + 1);
     }
 
+    /**
+     * 
+     * @param low
+     * @param high
+     * @return
+     */
     int partitionString(int low, int high){
         String pivot = theArray[high].getNombre().toLowerCase();
         int i = (low-1);
@@ -76,6 +111,12 @@ public class QuickSort{
         return (i + 1);
     }
 
+    /**
+     * 
+     * @param low
+     * @param high
+     * @return
+     */
     int partitionStringDescendente(int low, int high){
         String pivot = theArray[high].getNombre().toLowerCase();
         int i = (low-1);
@@ -89,6 +130,13 @@ public class QuickSort{
         return (i + 1);
     }
     
+    /**
+     * 
+     * @param low
+     * @param high
+     * @param opcion
+     * @param orden
+     */
     void recQSort(int low, int high, int opcion, int orden){
         if (low < high){
             int pi;
@@ -115,12 +163,15 @@ public class QuickSort{
             }
     
         }
-        generarCSV();
     }
 
-    public void generarCSV(){
+    /**
+     * 
+     * @param salida
+     */
+    public void generarCSV(String salida){
         try {
-            File file = new File("QuickSort_ordenado.csv");
+            File file = new File(salida);
             PrintWriter writer = new PrintWriter(file);
             // Escribir encabezados
             writer.println("Car_Name,Year,Selling_Price,Present_Price,Kms_Driven,Fuel_Type,Seller_Type,Transmission,Owner");
