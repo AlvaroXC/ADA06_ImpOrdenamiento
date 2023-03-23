@@ -40,7 +40,7 @@ public class Menu {
                 forma = formaOrdenadar();
                 BinaryInsertionSort brSort = new BinaryInsertionSort();
                 Auto array[] = cargarArrayBinary();
-                brSort.binaryInsertionSort(array, lista.size());
+                brSort.binaryInsertionSort(array, lista.size(),forma,columna);
                 break;
                 
             default:
@@ -66,8 +66,8 @@ public class Menu {
 
     public int elegirColumna(){
         System.out.println("Elige columna ordenar");
-        System.out.println("1- Año");
-        System.out.println("2- Nombre");
+        System.out.println("1- Nombre");
+        System.out.println("2- Año");
         entrada= new Scanner(System.in);
         int columna = entrada.nextInt();
         return columna;

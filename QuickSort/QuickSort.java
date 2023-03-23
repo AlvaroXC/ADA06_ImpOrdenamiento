@@ -92,29 +92,24 @@ public class QuickSort{
     void recQSort(int low, int high, int opcion, int orden){
         if (low < high){
             int pi;
-            //ordenar asendente años 
-            /*
-             * opcion 1 ordenar por año
-             * opcion 2 ordenar nombre
-             * orden 1 ordenar ascendente
-             * orden 2 ordenar descendente
-             */
+            
             if(opcion==1 && orden==1){
-                pi = partition(low, high);
+                pi = partitionString(low, high);
                 recQSort(low, pi - 1, opcion,orden);
                 recQSort(pi + 1, high,opcion,orden);
             }
             else if(opcion==1 && orden==2){
-                pi = partitionDescendente(low, high);
+                pi = partitionStringDescendente(low, high);
                 recQSort(low, pi - 1, opcion,orden);
                 recQSort(pi + 1, high,opcion,orden);
             }
             else if(opcion==2 && orden==1){
-                pi = partitionString(low, high);
+                pi = partition(low, high);
                 recQSort(low, pi - 1, opcion,orden);
                 recQSort(pi + 1, high,opcion,orden);
+
             }else{
-                pi = partitionStringDescendente(low, high);
+                pi = partitionDescendente(low, high);
                 recQSort(low, pi - 1, opcion,orden);
                 recQSort(pi + 1, high,opcion,orden);
             }
