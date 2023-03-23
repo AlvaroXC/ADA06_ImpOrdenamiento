@@ -1,12 +1,16 @@
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.PrintWriter;
+
 public class BinaryInsertionSort {
  
 //  implementacion iterativa 
-    public int binarySearch(int a[], int item, int low, int high){
+    public int binarySearch(Auto a[], Auto item, int low, int high){
         while (low <= high) {
-            int mid = low + (high - low) / 2;
-            if (item == a[mid])
+            int mid = low + (high - low) / 2; //divide el arreglo en dos
+            if (item.getAnio() == a[mid].getAnio())
                 return mid + 1;
-            else if (item > a[mid])
+            else if (item.getAnio() > a[mid].getAnio())
                 low = mid + 1;
             else
                 high = mid - 1;
@@ -14,8 +18,9 @@ public class BinaryInsertionSort {
         return low;
     }
 
-    public void binaryInsertionSort(int a[], int n) {
-        int i, loc, j, k, selected;
+    public void binaryInsertionSort(Auto a[], int n) {
+        int i, loc, j;
+        Auto selected;
     
         for (i = 1; i < n; ++i) {
             j = i - 1;
@@ -31,13 +36,24 @@ public class BinaryInsertionSort {
             }
             a[j + 1] = selected;
         }
+        generarCSV(a);
     }
 
-    public void printArray(int arr[]) {
-        int n = arr.length;
-        for (int i = 0; i < n; ++i)
-            System.out.print(arr[i] + " ");
- 
-        System.out.println();
+    public void generarCSV(Auto a[]){
+        try {
+            File file = new File("BinaryInsertionSort_ordenado.csv");
+            PrintWriter writer = new PrintWriter(file);
+            // Escribir encabezados
+            writer.println("Car_Name,Year,Selling_Price,Present_Price,Kms_Driven,Fuel_Type,Seller_Type,Transmission,Owner");
+            // Escribir datos
+            for (Auto auto : a) {
+                writer.println(auto.getNombre() + "," + auto.getAnio() + "," + auto.getPrecioVenta() + "," + auto.getPrecioActual()+","+
+                auto.getKilometraje()+","+auto.getTipoCombustible()+","+auto.getTipoVendedor()+","+
+                auto.getTransmision()+","+auto.getPropietarios());
+            }
+            writer.close();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
     }
 }

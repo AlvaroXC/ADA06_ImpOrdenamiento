@@ -1,36 +1,50 @@
-import java.io.BufferedReader;
-import java.io.FileReader;
-//import java.io.FileWriter;
-// import java.io.IOException;
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.LinkedList;
+import java.util.Scanner;
+import java.util.StringTokenizer;
 
 public class DAO {
+
     public static void main(String[] args) {
         iniciarCarga();
     }
 
     public static void iniciarCarga(){
         LinkedList <Auto> lista = new LinkedList<>();
-        String linea;
+        String archivo = "cardata.csv";
+
         try{
-            BufferedReader leer = new BufferedReader(new FileReader("cardata.csv"));
-            while((linea=leer.readLine())!=null){
-                String [] fila = linea.split(",");
-                Auto auto = new Auto(fila[0].toString(), Integer.parseInt(fila[1]), Double.parseDouble(fila[2]), Double.parseDouble(fila[3]), Integer.parseInt(fila[4]), 
-                fila[5].toString(), fila[6].toString(), fila[7].toString(), Integer.parseInt(fila[8]));
+            File file = new File(archivo);
+            Scanner leer = new Scanner(file);
+
+            if(leer.hasNext()){
+                leer.nextLine();
+            }
+            while(leer.hasNextLine()){
+                String linea = leer.nextLine();
+                StringTokenizer separador= new StringTokenizer(linea,",");
+                String nombre= separador.nextToken();
+                int anio= Integer.parseInt(separador.nextToken());
+                double precioVenta= Double.parseDouble(separador.nextToken());
+                double precioActual=Double.parseDouble(separador.nextToken());
+                int kilometraje=Integer.parseInt(separador.nextToken());
+                String tipoCombustible=separador.nextToken();
+                String tipoVendedor=separador.nextToken();
+                String transmision=separador.nextToken();
+                int propietarios=Integer.parseInt(separador.nextToken());
+                Auto auto = new Auto(nombre, anio, precioVenta, precioActual, kilometraje, tipoCombustible, tipoVendedor, transmision, propietarios);
                 lista.add(auto);
             }
             leer.close();
-            QuickSort qSort = new QuickSort(lista.size());
-            for (int i = 0; i < lista.size(); i++) {
-                qSort.insert(lista.get(i));
-            }
-            qSort.recQSort(0, lista.size()-1);
-            qSort.display();
 
-        }catch(Exception e){
-            System.out.println(e);
+            Menu menu = new Menu(lista);
+            menu.elegirAlgoritmo();
+
+        }catch(FileNotFoundException e){
+            System.out.println("Archivo no encontrado");
         }
     }
+
 
 }
