@@ -6,6 +6,15 @@ public class BinaryInsertionSort {
  
 //  implementacion iterativa 
     //orden ascendente 
+    /**
+     * 
+     * @param a
+     * @param item
+     * @param low
+     * @param high
+     * @param orden
+     * @return
+     */
     public int binarySearchAnio(Auto a[], Auto item, int low, int high, int orden){
         if(orden==1){
             while (low <= high) {
@@ -32,6 +41,15 @@ public class BinaryInsertionSort {
         return low;
     }
 
+    /**
+     * 
+     * @param a
+     * @param item
+     * @param low
+     * @param high
+     * @param orden
+     * @return
+     */
     public int binarySearchNombre(Auto a[], Auto item, int low, int high, int orden){
         if(orden==1){
             while (low <= high) {
@@ -57,6 +75,14 @@ public class BinaryInsertionSort {
         return low;
     }
 
+    /**
+     * 
+     * @param a
+     * @param n
+     * @param columna
+     * @param orden
+     */
+
     public void binaryInsertionSort(Auto a[], int n,  int columna,int orden) {
         int i, loc=0, j;
         Auto selected;
@@ -80,12 +106,16 @@ public class BinaryInsertionSort {
             }
             a[j + 1] = selected;
         }
-        generarCSV(a);
     }
 
-    public void generarCSV(Auto a[]){
+    /**
+     * 
+     * @param a
+     * @param salida
+     */
+    public void generarCSV(Auto a[], String salida){
         try {
-            File file = new File("BinaryInsertionSort_ordenado.csv");
+            File file = new File(salida);
             PrintWriter writer = new PrintWriter(file);
             // Escribir encabezados
             writer.println("Car_Name,Year,Selling_Price,Present_Price,Kms_Driven,Fuel_Type,Seller_Type,Transmission,Owner");

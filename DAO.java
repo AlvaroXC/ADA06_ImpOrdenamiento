@@ -7,12 +7,18 @@ import java.util.StringTokenizer;
 public class DAO {
 
     public static void main(String[] args) {
-        iniciarCarga();
+        String archivo = args[0];
+        String salida = args[1];
+        iniciarCarga(archivo,salida);
     }
 
-    public static void iniciarCarga(){
+    /**
+     * 
+     * @param archivo
+     * @param salida
+     */
+    public static void iniciarCarga(String archivo, String salida){
         LinkedList <Auto> lista = new LinkedList<>();
-        String archivo = "cardata.csv";
 
         try{
             File file = new File(archivo);
@@ -39,7 +45,7 @@ public class DAO {
             leer.close();
 
             Menu menu = new Menu(lista);
-            menu.elegirAlgoritmo();
+            menu.elegirAlgoritmo(salida);
 
         }catch(FileNotFoundException e){
             System.out.println("Archivo no encontrado");
