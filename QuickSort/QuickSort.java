@@ -1,3 +1,7 @@
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.PrintWriter;
+
 public class QuickSort{
     private Auto[] theArray;          // ref to array theArray
     private int nElems;               // number of data items
@@ -44,14 +48,96 @@ public class QuickSort{
         swap(i + 1, high);
         return (i + 1);
     }
+    int partitionDescendente(int low, int high){
+        
+        int pivot = theArray[high].getAnio();
+        int i = (low - 1);
     
-    void recQSort(int low, int high){
-        if (low < high){
+        for(int j = low; j <= high - 1; j++){
+            if (theArray[j].getAnio()>(pivot)){
+                i++;
+                swap(i, j);
+            }
+        }
+        swap(i + 1, high);
+        return (i + 1);
+    }
 
-            int pi = partition(low, high);
+    int partitionString(int low, int high){
+        String pivot = theArray[high].getNombre().toLowerCase();
+        int i = (low-1);
+        for(int j = low; j <= high - 1; j++){
+            if ((theArray[j].getNombre().toLowerCase()).compareTo(pivot)<0){
+                i++;
+                swap(i, j);
+            }
+        }
+        swap(i + 1, high);
+        return (i + 1);
+    }
+
+    int partitionStringDescendente(int low, int high){
+        String pivot = theArray[high].getNombre().toLowerCase();
+        int i = (low-1);
+        for(int j = low; j <= high - 1; j++){
+            if ((theArray[j].getNombre().toLowerCase()).compareTo(pivot)>0){
+                i++;
+                swap(i, j);
+            }
+        }
+        swap(i + 1, high);
+        return (i + 1);
+    }
     
-            recQSort(low, pi - 1);
-            recQSort(pi + 1, high);
+    void recQSort(int low, int high, int opcion, int orden){
+        if (low < high){
+            int pi;
+            //ordenar asendente años 
+            /*
+             * opcion 1 ordenar por año
+             * opcion 2 ordenar nombre
+             * orden 1 ordenar ascendente
+             * orden 2 ordenar descendente
+             */
+            if(opcion==1 && orden==1){
+                pi = partition(low, high);
+                recQSort(low, pi - 1, opcion,orden);
+                recQSort(pi + 1, high,opcion,orden);
+            }
+            else if(opcion==1 && orden==2){
+                pi = partitionDescendente(low, high);
+                recQSort(low, pi - 1, opcion,orden);
+                recQSort(pi + 1, high,opcion,orden);
+            }
+            else if(opcion==2 && orden==1){
+                pi = partitionString(low, high);
+                recQSort(low, pi - 1, opcion,orden);
+                recQSort(pi + 1, high,opcion,orden);
+            }else{
+                pi = partitionStringDescendente(low, high);
+                recQSort(low, pi - 1, opcion,orden);
+                recQSort(pi + 1, high,opcion,orden);
+            }
+    
+        }
+        generarCSV();
+    }
+
+    public void generarCSV(){
+        try {
+            File file = new File("QuickSort_ordenado.csv");
+            PrintWriter writer = new PrintWriter(file);
+            // Escribir encabezados
+            writer.println("Car_Name,Year,Selling_Price,Present_Price,Kms_Driven,Fuel_Type,Seller_Type,Transmission,Owner");
+            // Escribir datos
+            for (Auto auto : theArray) {
+                writer.println(auto.getNombre() + "," + auto.getAnio() + "," + auto.getPrecioVenta() + "," + auto.getPrecioActual()+","+
+                auto.getKilometraje()+","+auto.getTipoCombustible()+","+auto.getTipoVendedor()+","+
+                auto.getTransmision()+","+auto.getPropietarios());
+            }
+            writer.close();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
         }
     }
 }
