@@ -1,18 +1,23 @@
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
+import java.util.LinkedList;
 
 public class QuickSort{
-    private Auto[] theArray;          // ref to array theArray
+    LinkedList <Auto> lista = new LinkedList<>();        // ref to array theArray
+    private int comparaciones;
+    private int intercambios;
     private int nElems;               // number of data items
 
     /**
      * 
      * @param max
      */
-    public QuickSort(int max){
-      theArray = new Auto[max];      // create array
-      nElems = 0;
+    public QuickSort( LinkedList <Auto> lista){
+      this.lista= lista;     // create array
+      comparaciones=0;
+      intercambios=0;
+      nElems=0;
     }
 
     /**
@@ -21,14 +26,14 @@ public class QuickSort{
      */
 
     public void insert(Auto value){
-      theArray[nElems] = value;      // insert it
-      nElems++;                      // increment size
+        lista.add(nElems, value);
+        nElems++;                      // increment size
     }
 
 
     public void display() {
-      for(int j=0; j<nElems; j++)    // for each element,
-         System.out.print(theArray[j].getNombre()+" "+theArray[j].getAnio() + "\n");  // display it
+      for(int j=0; j<lista.size(); j++)    //for each element,
+         System.out.print(lista.get(j).getNombre()+" "+lista.get(j).getAnio() + "\n");  //display it
       System.out.println("");
     }
 
@@ -38,9 +43,11 @@ public class QuickSort{
      * @param j
      */
     void swap(int i, int j){
-        Auto temp = theArray[i];
-        theArray[i] = theArray[j];
-        theArray[j] = temp;
+        Auto temp = lista.get(i);
+        Auto tempJ= lista.get(j);
+        lista.set(i, tempJ);
+        lista.set(j, temp);
+        intercambios++;
     }
     
     /* toma el ultimo elemento como pivote, 
@@ -58,14 +65,15 @@ public class QuickSort{
      */
     int partition(int low, int high){
         
-        int pivot = theArray[high].getAnio();
+        int pivot = lista.get(high).getAnio();
         int i = (low - 1);
     
         for(int j = low; j <= high - 1; j++){
-            if (theArray[j].getAnio()<(pivot)){
+            if (lista.get(i).getAnio()<(pivot)){
                 i++;
-                swap(i, j);
+                swap(i,j);
             }
+            comparaciones++;
         }
         swap(i + 1, high);
         return (i + 1);
@@ -79,17 +87,26 @@ public class QuickSort{
      */
     int partitionDescendente(int low, int high){
         
-        int pivot = theArray[high].getAnio();
+        int pivot = lista.get(high).getAnio();
         int i = (low - 1);
     
         for(int j = low; j <= high - 1; j++){
-            if (theArray[j].getAnio()>(pivot)){
+            if (lista.get(j).getAnio()>(pivot)){
                 i++;
                 swap(i, j);
             }
+            comparaciones++;
         }
         swap(i + 1, high);
         return (i + 1);
+    }
+
+    public int getComparaciones() {
+        return comparaciones;
+    }
+
+    public int getIntercambios() {
+        return intercambios;
     }
 
     /**
@@ -99,13 +116,14 @@ public class QuickSort{
      * @return
      */
     int partitionString(int low, int high){
-        String pivot = theArray[high].getNombre().toLowerCase();
+        String pivot = lista.get(high).getNombre().toLowerCase();
         int i = (low-1);
         for(int j = low; j <= high - 1; j++){
-            if ((theArray[j].getNombre().toLowerCase()).compareTo(pivot)<0){
+            if ((lista.get(j).getNombre().toLowerCase()).compareTo(pivot)<0){
                 i++;
                 swap(i, j);
             }
+            comparaciones++;
         }
         swap(i + 1, high);
         return (i + 1);
@@ -118,13 +136,14 @@ public class QuickSort{
      * @return
      */
     int partitionStringDescendente(int low, int high){
-        String pivot = theArray[high].getNombre().toLowerCase();
+        String pivot = lista.get(high).getNombre().toLowerCase();
         int i = (low-1);
         for(int j = low; j <= high - 1; j++){
-            if ((theArray[j].getNombre().toLowerCase()).compareTo(pivot)>0){
+            if ((lista.get(j).getNombre().toLowerCase()).compareTo(pivot)>0){
                 i++;
                 swap(i, j);
             }
+            comparaciones++;
         }
         swap(i + 1, high);
         return (i + 1);
@@ -169,14 +188,14 @@ public class QuickSort{
      * 
      * @param salida
      */
-    public void generarCSV(String salida){
+    public void generarCSV(){
         try {
-            File file = new File(salida);
+            File file = new File("QuickSort_Ordenado.csv");
             PrintWriter writer = new PrintWriter(file);
             // Escribir encabezados
             writer.println("Car_Name,Year,Selling_Price,Present_Price,Kms_Driven,Fuel_Type,Seller_Type,Transmission,Owner");
             // Escribir datos
-            for (Auto auto : theArray) {
+            for (Auto auto : lista) {
                 writer.println(auto.getNombre() + "," + auto.getAnio() + "," + auto.getPrecioVenta() + "," + auto.getPrecioActual()+","+
                 auto.getKilometraje()+","+auto.getTipoCombustible()+","+auto.getTipoVendedor()+","+
                 auto.getTransmision()+","+auto.getPropietarios());
