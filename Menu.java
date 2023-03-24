@@ -34,50 +34,26 @@ public class Menu {
      * 
      * @param salida
      */
-   public void elegirAlgoritmo(String salida){
-       int numAlgoritmo=0;
-        if(salida.contains("QuickSort")){
-            numAlgoritmo=1;
-        }
-        else if(salida.contains("Binary")){
-            numAlgoritmo=2;
-        }
-
+   public void ejecutarAlgoritmos(){
         int columna, forma;
+        columna = elegirColumna();
+        forma = formaOrdenadar();
 
-        switch (numAlgoritmo) {
-            case 1:
-                columna = elegirColumna();
-                forma = formaOrdenadar();
-                QuickSort qSort= new QuickSort(lista.size());
-                cargarArrayQuick(qSort);
-                qSort.recQSort(0, lista.size()-1,columna,forma);
-                qSort.generarCSV(salida);
-                break;
-            case 2:
-                columna = elegirColumna();
-                forma = formaOrdenadar();
-                BinaryInsertionSort brSort = new BinaryInsertionSort();
-                Auto array[] = cargarArrayBinary();
-                brSort.binaryInsertionSort(array, lista.size(),forma,columna);
-                brSort.generarCSV(array, salida);
-                break;
-                
-            default:
-                System.out.println("Algoritmo no especificado");
-                break;
-        }
+
+        QuickSort qSort= new QuickSort(lista);
+        qSort.recQSort(0, lista.size()-1,columna,forma);
+        System.out.println("Intercambios: "+qSort.getIntercambios()+" Comparaciones "+qSort.getComparaciones());
+        qSort.generarCSV();
+
+        BinaryInsertionSort brSort = new BinaryInsertionSort(lista);
+        brSort.binaryInsertionSort(lista.size(),forma,columna);
+        brSort.generarCSV();
     }
 
     /**
      * 
      * @param qSort
      */
-    public void cargarArrayQuick(QuickSort qSort){
-        for (int i = 0; i < lista.size(); i++) {
-            qSort.insert(lista.get(i));
-        }
-    } 
 
     /**
      * 

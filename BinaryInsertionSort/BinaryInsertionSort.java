@@ -1,11 +1,26 @@
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
+import java.util.LinkedList;
 
 public class BinaryInsertionSort {
- 
-//  implementacion iterativa 
-    //orden ascendente 
+    private LinkedList<Auto> a = new LinkedList<>();
+    private int intercambios;
+    private int comparaciones;
+
+    public BinaryInsertionSort(LinkedList<Auto> a){
+        this.a= a;
+        intercambios=0;
+        comparaciones=0;
+    }
+    
+    public int getComparaciones() {
+        return comparaciones;
+    }
+    public int getIntercambios() {
+        return intercambios;
+    }
+
     /**
      * 
      * @param a
@@ -15,13 +30,14 @@ public class BinaryInsertionSort {
      * @param orden
      * @return
      */
-    public int binarySearchAnio(Auto a[], Auto item, int low, int high, int orden){
+    public int binarySearchAnio(Auto item, int low, int high, int orden){
         if(orden==1){
             while (low <= high) {
                 int mid = low + (high - low) / 2; //divide el arreglo en dos
-                if (item.getAnio() == a[mid].getAnio())
+                //item.getAnio() == a[mid].getAnio()
+                if (item.getAnio()==a.get(mid).getAnio())
                     return mid + 1;
-                else if (item.getAnio()>a[mid].getAnio())
+                else if (item.getAnio()>a.get(mid).getAnio())
                     low = mid + 1;
                 else
                     high = mid - 1;
@@ -29,14 +45,15 @@ public class BinaryInsertionSort {
         }else{
             while (low <= high) {
                 int mid = low + (high - low) / 2; //divide el arreglo en dos
-                if (item.getAnio() == a[mid].getAnio())
+                if (item.getAnio() == a.get(mid).getAnio())
                     return mid + 1;
-                else if (item.getAnio()<a[mid].getAnio())
+                else if (item.getAnio()<a.get(mid).getAnio())
                     low = mid + 1;
                 else
                     high = mid - 1;
             }
         }
+        comparaciones++;
 
         return low;
     }
@@ -50,13 +67,13 @@ public class BinaryInsertionSort {
      * @param orden
      * @return
      */
-    public int binarySearchNombre(Auto a[], Auto item, int low, int high, int orden){
+    public int binarySearchNombre(Auto item, int low, int high, int orden){
         if(orden==1){
             while (low <= high) {
                 int mid = low + (high - low) / 2; //divide el arreglo en dos
-                if ((item.getNombre().toLowerCase().compareTo(a[mid].getNombre().toLowerCase())==0))
+                if ((item.getNombre().toLowerCase().compareTo(a.get(mid).getNombre().toLowerCase())==0))
                     return mid + 1;
-                else if ((item.getNombre().toLowerCase().compareTo(a[mid].getNombre().toLowerCase()))>0)
+                else if ((item.getNombre().toLowerCase().compareTo(a.get(mid).getNombre().toLowerCase()))>0)
                     low = mid + 1;
                 else
                     high = mid - 1;
@@ -64,14 +81,15 @@ public class BinaryInsertionSort {
         }else{
             while (low <= high) {
                 int mid = low + (high - low) / 2; //divide el arreglo en dos
-                if ((item.getNombre().toLowerCase().compareTo(a[mid].getNombre().toLowerCase())==0))
+                if ((item.getNombre().toLowerCase().compareTo(a.get(mid).getNombre().toLowerCase())==0))
                     return mid + 1;
-                else if ((item.getNombre().toLowerCase().compareTo(a[mid].getNombre().toLowerCase()))<0)
+                else if ((item.getNombre().toLowerCase().compareTo(a.get(mid).getNombre().toLowerCase()))<0)
                     low = mid + 1;
                 else
                     high = mid - 1;
             }
         }
+        comparaciones++;
         return low;
     }
 
@@ -83,28 +101,31 @@ public class BinaryInsertionSort {
      * @param orden
      */
 
-    public void binaryInsertionSort(Auto a[], int n,  int columna,int orden) {
+    public void binaryInsertionSort(int n,  int columna,int orden) {
         int i, loc=0, j;
         Auto selected;
     
         for (i = 1; i < n; ++i) {
             j = i - 1;
-            selected = a[i];
+            selected = a.get(i);
     
             if(columna==1){
-                loc = binarySearchNombre(a, selected, 0, j,orden);
+                loc = binarySearchNombre(selected, 0, j,orden);
             }else{
-                loc = binarySearchAnio(a, selected, 0, j,orden);
+                loc = binarySearchAnio(selected, 0, j,orden);
 
             }
             // encuentra la posicion donde debe ser insertado el elemento
     
             // Hace un corrimiento a la derecha de los datos
             while (j >= loc) {
-                a[j + 1] = a[j];
+                a.set(j+1, a.get(j));
+                //a[j + 1] = a[j];
                 j--;
+                intercambios++;
             }
-            a[j + 1] = selected;
+            a.set(j+1, selected);
+            //a[j + 1] = selected;
         }
     }
 
@@ -113,9 +134,9 @@ public class BinaryInsertionSort {
      * @param a
      * @param salida
      */
-    public void generarCSV(Auto a[], String salida){
+    public void generarCSV(){
         try {
-            File file = new File(salida);
+            File file = new File("BinaryInsertionSort_Ordenado.csv");
             PrintWriter writer = new PrintWriter(file);
             // Escribir encabezados
             writer.println("Car_Name,Year,Selling_Price,Present_Price,Kms_Driven,Fuel_Type,Seller_Type,Transmission,Owner");
