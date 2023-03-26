@@ -3,42 +3,42 @@ import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 import java.util.LinkedList;
 
+/**
+ * La clase implementa el algoritmo de ordenamineto Quick Sort
+ * en donde se utiliza una LinkedList que almacena objetos de tipo Auto, la cual se ordena por 
+ * anio o por nombre, ambos de forma ascendente o descendente y tambien puede generar
+ * un csv en donde se muestra el resultado del ordenamiento
+ * 
+ */
+
 public class QuickSort{
-    LinkedList <Auto> lista = new LinkedList<>();        // ref to array theArray
+    LinkedList <Auto> lista = new LinkedList<>();        
     private int comparaciones;
     private int intercambios;
-    private int nElems;               // number of data items
+               
 
     /**
      * 
-     * @param max
+     * @param lista
      */
     public QuickSort( LinkedList <Auto> lista){
-      this.lista= lista;     // create array
+      this.lista= lista;     
       comparaciones=0;
       intercambios=0;
-      nElems=0;
     }
+
 
     /**
-     * 
-     * @param value
+     * Muestra el nombre y el anio de todos los objetos de la lista 
      */
-
-    public void insert(Auto value){
-        lista.add(nElems, value);
-        nElems++;                      // increment size
-    }
-
-
     public void display() {
-      for(int j=0; j<lista.size(); j++)    //for each element,
-         System.out.print(lista.get(j).getNombre()+" "+lista.get(j).getAnio() + "\n");  //display it
+      for(int j=0; j<lista.size(); j++)   
+         System.out.print(lista.get(j).getNombre()+" "+lista.get(j).getAnio() + "\n"); 
       System.out.println("");
     }
 
     /**
-     * 
+     * Hace el intercambio de datos entre los nodos de la lista para ordenarla
      * @param i
      * @param j
      */
@@ -49,19 +49,15 @@ public class QuickSort{
         lista.set(j, temp);
         intercambios++;
     }
-    
-    /* toma el ultimo elemento como pivote, 
-    coloca el pivote en su posicion correcta del arreglo ordenado,
-    coloca todos los valores mas pequeños (menores a los pivotes)
-    a la izquierda del pivote y coloca todos los valores mas grandes 
-    (mayores a los pivotes) a la derecha del pivote 
-    */
+
 
     /**
+     * Toma el ultimo elemento de la lista para hacer las comparaciones e ir ordenandola 
+     * de forma ascendente segun el anio del objeto
      * 
      * @param low
      * @param high
-     * @return
+     * @return int 
      */
     int partition(int low, int high){
         
@@ -80,6 +76,8 @@ public class QuickSort{
     }
 
     /**
+     * Toma el ultimo elemento de la lista para hacer las comparaciones e ir ordenandola 
+     * de forma descendente segun el anio del objeto 
      * 
      * @param low
      * @param high
@@ -101,15 +99,25 @@ public class QuickSort{
         return (i + 1);
     }
 
+    /**
+     * Obtiene el total de comparaciones que hizo del algoritmo
+     * @return int
+     */
     public int getComparaciones() {
         return comparaciones;
     }
 
+    /**
+     * Obtiene el total de intercambios que hizo el algoritmo
+     * @return
+     */
     public int getIntercambios() {
         return intercambios;
     }
 
     /**
+     * Toma el ultimo elemento de la lista para hacer las comparaciones e ir ordenandola 
+     * de forma ascendente segun el nombre del objeto
      * 
      * @param low
      * @param high
@@ -130,10 +138,12 @@ public class QuickSort{
     }
 
     /**
+     * Toma el ultimo elemento de la lista para hacer las comparaciones e ir ordenandola 
+     * de forma descendente segun el nombre del objeto
      * 
      * @param low
      * @param high
-     * @return
+     * @return int
      */
     int partitionStringDescendente(int low, int high){
         String pivot = lista.get(high).getNombre().toLowerCase();
@@ -150,11 +160,12 @@ public class QuickSort{
     }
     
     /**
+     * Se designa cual sera el dato del objeto a comparar y la forma de ordenarla
      * 
      * @param low
      * @param high
-     * @param opcion
-     * @param orden
+     * @param opcion dato que se usara para las comparaciones 1 nombre y 2 anio
+     * @param orden forma en la cual se ordenara, ascendente 1 y descendente 2 
      */
     void recQSort(int low, int high, int opcion, int orden){
         if (low < high){
@@ -184,10 +195,11 @@ public class QuickSort{
         }
     }
 
+
     /**
-     * 
-     * @param salida
-     */
+     * Genera el archivo donde se muestra la lista ordena con los objetos de tipo Auto
+     * @exception FileNotFoundException no se encuentra el archivo
+    */
     public void generarCSV(){
         try {
             File file = new File("QuickSort_Ordenado.csv");

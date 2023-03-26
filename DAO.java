@@ -10,10 +10,12 @@ public class DAO {
         iniciarCarga();
     }
 
+
     /**
+     * Lee un archivo csv, crea objetos de tipo Auto y los almacena en una LinkedList, 
+     * después se crea un objeto de tipo Menu en el cual se elegiran ciertos valores
+     * para desginar el ordenamiento de la lista por medio de los algoritmos de ordenamiento
      * 
-     * @param archivo
-     * @param salida
      */
     public static void iniciarCarga(){
         LinkedList <Auto> lista = new LinkedList<>();
