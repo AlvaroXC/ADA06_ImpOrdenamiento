@@ -6,13 +6,17 @@ public class Menu {
     private LinkedList<Auto> lista = new LinkedList<>();
     Scanner entrada;
 
+    /**
+     * Constructor de la clase Menu que recibe una LinkedList y la asocia otra para
+     * @param lista
+     */
     public Menu(LinkedList <Auto> lista){
         this.lista = lista;
     }
 
     /**
-     * 
-     * @return
+     * Devuelve la forma de ordenar la lista, ascendente 1 y descendenre 2
+     * @return int 
      */
 
     int formaOrdenadar(){
@@ -31,47 +35,8 @@ public class Menu {
     }
 
     /**
-     * 
-     * @param salida
-     */
-   public void ejecutarAlgoritmos(){
-        int columna, forma;
-        columna = elegirColumna();
-        forma = formaOrdenadar();
-
-
-        QuickSort qSort= new QuickSort(lista);
-        qSort.recQSort(0, lista.size()-1,columna,forma);
-        System.out.println("Intercambios: "+qSort.getIntercambios()+" Comparaciones "+qSort.getComparaciones());
-        qSort.generarCSV();
-
-        BinaryInsertionSort brSort = new BinaryInsertionSort(lista);
-        brSort.binaryInsertionSort(lista.size(),forma,columna);
-        brSort.generarCSV();
-    }
-
-    /**
-     * 
-     * @param qSort
-     */
-
-    /**
-     * 
-     * @return
-     */
-    public Auto[] cargarArrayBinary(){
-        Auto []array= new Auto[lista.size()];
-        int elements=0;
-        for(int i=0; i<lista.size(); i++){
-            array[elements]=lista.get(i);
-            elements++;
-        }
-        return array;
-    }
-
-    /**
-     * 
-     * @return
+     * devuelve que dato se tomara en cuenta para ordenar la lista, nombre 1, anio 2
+     * @return int 
      */
     public int elegirColumna(){
         System.out.println("Elige columna ordenar");
@@ -87,4 +52,28 @@ public class Menu {
         }
         return columna;
     }
+
+
+    /**
+     * le envia a cada algoritmo la lista, la forma en la cual se va ordenar la lista y el dato que se tomara
+     * en cuenta para ordenarla y generamos un archivo csv para ver la lista ordenada
+     */
+   public void ejecutarAlgoritmos(){
+        int columna, forma;
+        columna = elegirColumna();
+        forma = formaOrdenadar();
+
+
+        QuickSort qSort= new QuickSort(lista);
+        qSort.recQSort(0, lista.size()-1,columna,forma);
+        System.out.println("Intercambios: "+qSort.getIntercambios()+" Comparaciones "+qSort.getComparaciones());
+        qSort.generarCSV();
+
+        BinaryInsertionSort brSort = new BinaryInsertionSort(lista);
+        brSort.binaryInsertionSort(lista.size(),columna,forma);
+        brSort.generarCSV();
+    }
+
+
+
 }
