@@ -1,3 +1,4 @@
+package Algoritmos.MergeSort;
 public class MergeSortApp{
    public static void main(String[] args){
       int maxSize = 100;             // array size

@@ -1,7 +1,6 @@
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.PrintWriter;
+package Algoritmos.BinaryInsertionSort;
 import java.util.LinkedList;
+import Modelo.Auto;
 
 /**
  * La clase implementa el algoritmo de ordenamineto Binary Insertion Sort 
@@ -95,13 +94,16 @@ public class BinaryInsertionSort {
             while (low <= high) {
                 int mid = low + (high - low) / 2; 
                 if ((item.getNombre().toLowerCase().compareTo(a.get(mid).getNombre().toLowerCase()) == 0))
-                    return mid + 1;
+                    {comparaciones++;
+                        return mid + 1;}
                 else if ((item.getNombre().toLowerCase().compareTo(a.get(mid).getNombre().toLowerCase())) > 0)
-                    low = mid + 1;
+                    {low = mid + 1;
+                    comparaciones += 2;}
                 else
-                    high = mid - 1;
+                    {high = mid - 1;
+                    comparaciones+=2;}
                 
-                comparaciones++;
+                
             }
         } else {
             while (low <= high) {
@@ -144,35 +146,17 @@ public class BinaryInsertionSort {
 
             while (j >= loc) {
                 a.set(j + 1, a.get(j));
-
+                intercambios++;
                 j--;
                
             }
             a.set(j + 1, selected);
+            intercambios++;
 
         }
     }
 
 
-    /**
-     * Genera el archivo donde se muestra la lista ordena con los objetos de tipo Auto
-     * @exception FileNotFoundException no se encuentra el archivo
-     */
-    public void generarCSV() {
-        try {
-            File file = new File("BinaryInsertionSort_Ordenado.csv");
-            PrintWriter writer = new PrintWriter(file);
-            writer.println(
-                    "Car_Name,Year,Selling_Price,Present_Price,Kms_Driven,Fuel_Type,Seller_Type,Transmission,Owner");
-            for (Auto auto : a) {
-                writer.println(auto.getNombre() + "," + auto.getAnio() + "," + auto.getPrecioVenta() + ","
-                        + auto.getPrecioActual() + "," +
-                        auto.getKilometraje() + "," + auto.getTipoCombustible() + "," + auto.getTipoVendedor() + "," +
-                        auto.getTransmision() + "," + auto.getPropietarios());
-            }
-            writer.close();
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-    }
+
+
 }

@@ -1,23 +1,19 @@
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.LinkedList;
 import java.util.Scanner;
 import java.util.StringTokenizer;
 
+import Modelo.Auto;
+
 public class DAO {
 
-    public static void main(String[] args) {
-        iniciarCarga();
-    }
-
-
     /**
-     * Lee un archivo csv, crea objetos de tipo Auto y los almacena en una LinkedList, 
-     * después se crea un objeto de tipo Menu en el cual se elegiran ciertos valores
-     * para desginar el ordenamiento de la lista por medio de los algoritmos de ordenamiento
-     * 
+     * Lee un archivo csv, crea objetos de tipo Auto y los almacena en una LinkedList
+     * return LinkedList<Auto>
      */
-    public static void iniciarCarga(){
+    public LinkedList<Auto> iniciarCarga(){
         LinkedList <Auto> lista = new LinkedList<>();
 
         try{
@@ -44,12 +40,11 @@ public class DAO {
             }
             leer.close();
 
-            Menu menu = new Menu(lista);
-            menu.ejecutarAlgoritmos();
-
         }catch(FileNotFoundException e){
             System.out.println("Archivo no encontrado");
         }
+
+        return lista;
     }
 
 

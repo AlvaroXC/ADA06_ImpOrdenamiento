@@ -1,3 +1,5 @@
+package Modelo;
+
 public class Auto {
     private String nombre;
     private int anio;
