@@ -1,3 +1,5 @@
+package Algoritmos.MergeSort;
+
 public class MergeSort{
    private long[] theArray;          // ref to array theArray
    private int nElems;               // number of data items
