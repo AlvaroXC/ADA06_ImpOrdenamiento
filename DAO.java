@@ -11,7 +11,7 @@ public class DAO {
 
     /**
      * Lee un archivo csv, crea objetos de tipo Auto y los almacena en una LinkedList
-     * return LinkedList<Auto>
+     * @return LinkedList<Auto>
      */
     public LinkedList<Auto> iniciarCarga(){
         LinkedList <Auto> lista = new LinkedList<>();
