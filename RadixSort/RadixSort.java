@@ -1,7 +1,7 @@
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.PrintWriter;
+package Algoritmos.RadixSort;
 import java.util.LinkedList;
+
+import Modelo.Auto;
 
 public class RadixSort {
 	LinkedList<Auto> lista = new LinkedList<>();
@@ -75,7 +75,7 @@ public class RadixSort {
 		}
 	}
 
-	public void generarCSV() {
+	/*public void generarCSV() {
 		try {
 			File file = new File("RadixSort_Ordenado.csv");
 			PrintWriter writer = new PrintWriter(file);
@@ -91,7 +91,6 @@ public class RadixSort {
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
-	}
+	}*/
 
 }
-
