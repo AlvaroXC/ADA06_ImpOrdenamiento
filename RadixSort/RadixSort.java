@@ -1,77 +1,97 @@
-// Radix sort Java implementation
-import java.util.*;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.PrintWriter;
+import java.util.LinkedList;
 
 public class RadixSort {
-    private long[] theArray;          // ref to array theArray
-    private int nElems;               // number of data items
-    //-----------------------------------------------------------
-    public RadixSort(int max)   {
-        theArray = new long[max];      // create array
-        nElems = 0;
-    }
-    
-    //-----------------------------------------------------------
-    public void insert(long value){
-        theArray[nElems] = value;      // insert it
-        nElems++;                      // increment size
-    }
-
-    public void display() {
-        for(int j=0; j<nElems; j++)    // for each element,
-            System.out.print(theArray[j] + " ");  // display it
-        System.out.println("");
-    }
-
-	// A utility function to get maximum value in arr[]
-	private long getMax(){
-		long mx = theArray[0];
-		for (int i = 1; i < nElems; i++)
-			if (theArray[i] > mx)
-				mx = theArray[i];
-		return mx;
+	LinkedList<Auto> lista = new LinkedList<>();
+	private int comparaciones;
+	private int intercambios;
+	public RadixSort(LinkedList<Auto> lista) {
+		this.lista = lista;
+		comparaciones = 0;
+		intercambios = 0;
 	}
-
-	// A function to do counting sort of arr[] according to
-	// the digit represented by exp.
-	public void countSort(int exp){
-		long[] output = new long[nElems]; // output array
+	
+	public void display() {
+		for (int j = 0; j < lista.size(); j++)
+			System.out.print(lista.get(j).getNombre() + " " + lista.get(j).getAnio() + "\n");
+		System.out.println("");
+	}
+	
+	void swap(int i, int j) {
+		Auto temp = lista.get(i);
+		Auto tempJ = lista.get(j);
+		lista.set(i, tempJ);
+		lista.set(j, temp);
+		intercambios++;
+	}
+	
+	public int getComparaciones() {
+		return comparaciones;
+	}
+	
+	public int getIntercambios() {
+		return intercambios;
+	}
+	
+	int getMaxAnio() {
+		int max = lista.get(0).getAnio();
+		for (int i = 1; i < lista.size(); i++)
+			if (lista.get(i).getAnio() > max)
+				max = lista.get(i).getAnio();
+		return max;
+	}
+	
+	void countSort(int exp) {
+		int n = lista.size();
+		Auto[] output = new Auto[n];
 		int i;
-		long[] count = new long[10];
-		Arrays.fill(count, 0);
-
-		// Store count of occurrences in count[]
-		for (i = 0; i < nElems; i++)
-			count[(int) ((theArray[i] / exp) % 10)]++;
-
-		// Change count[i] so that count[i] now contains
-		// actual position of this digit in output[]
+		int[] count = new int[10];
+		for (i = 0; i < n; i++)
+			count[(lista.get(i).getAnio() / exp) % 10]++;
 		for (i = 1; i < 10; i++)
 			count[i] += count[i - 1];
-
-		// Build the output array
-		for (i = nElems - 1; i >= 0; i--) {
-			output[(int) (count[(int) ((theArray[i] / exp) % 10)] - 1)] = theArray[i];
-			count[(int) ((theArray[i] / exp) % 10)]--;
+		for (i = n - 1; i >= 0; i--) {
+			output[count[(lista.get(i).getAnio() / exp) % 10] - 1] = lista.get(i);
+			count[(lista.get(i).getAnio() / exp) % 10]--;
 		}
-
-		// Copy the output array to arr[], so that arr[] now
-		// contains sorted numbers according to current digit
-        theArray = Arrays.copyOf(output, output.length);
-		
+		for (i = 0; i < n; i++)
+			lista.set(i, output[i]);
 	}
-
-	// The main function to that sorts arr[] of size n using
-	// Radix Sort
-	public void sort(){
-		// Find the maximum number to know number of digits
-		long m = getMax();
-
-		// Do counting sort for every digit. Note that
-		// instead of passing digit number, exp is passed.
-		// exp is 10^i where i is current digit number
-		for (int exp = 1; m / exp > 0; exp *= 10)
+	
+	void radixsort() {
+		int m = getMaxAnio();
+		for (int exp = 1; m / exp > 0; exp *= 10) {
 			countSort(exp);
+		}
 	}
+	
+	void recRadixSort(int left, int right, int opcion) {
+		if (left  < right) {
+			int middle = left + (right - left) / 2;
+			recRadixSort(left, middle, opcion);
+			recRadixSort(middle + 1, right, opcion);
+		}
+	}
+
+	public void generarCSV() {
+		try {
+			File file = new File("RadixSort_Ordenado.csv");
+			PrintWriter writer = new PrintWriter(file);
+			// Escribir encabezados
+			writer.println("Car_Name,Year,Selling_Price,Present_Price,Kms_Driven,Fuel_Type,Seller_Type,Transmission,Owner");
+			// Escribir datos
+			for (Auto auto : lista) {
+				writer.println(auto.getNombre() + "," + auto.getAnio() + "," + auto.getPrecioVenta() + ","
+						+ auto.getPrecioActual() + "," + auto.getKilometraje() + "," + auto.getTipoCombustible() + ","
+						+ auto.getTipoVendedor() + "," + auto.getTransmision() + "," + auto.getPropietarios());
+			}
+			writer.close();
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
+	}
+
 }
-/* This code is contributed by Devesh Agrawal */
 
