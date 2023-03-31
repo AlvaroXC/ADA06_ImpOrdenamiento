@@ -1,0 +1,1 @@
+memberSearchIndex = [{"p":"src.DAO","c":"DAO","l":"DAO()","u":"%3Cinit%3E()"},{"p":"src.DAO","c":"DAO","l":"iniciarCarga()"}];updateSearchResults();
