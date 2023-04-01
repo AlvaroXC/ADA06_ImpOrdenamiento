@@ -107,6 +107,24 @@ public class Menu {
         intercambios = Integer.toString(brSort.getIntercambios());
         tiempoTotalS = Long.toString(tiempoTotal);
         metricas.add(new String[]{"BinaryInsertionSort", comparaciones, intercambios, tiempoTotalS});
+        
+        lista = list.iniciarCarga();
+        MergeSort mSort = new MergeSort(lista);
+        mSort.mergeSort(0, lista.size() - 1, columna, forma);
+        generarCSV("MergeSort_Ordenado.csv", lista);
+        comparaciones = Integer.toString(mSort.getComparaciones());
+        intercambios = Integer.toString(mSort.getIntercambios());
+        tiempoTotalS = Long.toString(tiempoTotal);
+        metricas.add(new String[] {"MergeSort", comparaciones, intercambios, tiempoTotalS});
+        
+        lista = list.iniciarCarga();
+        RadixSort rSort = new RadixSort(lista);
+        rSort.radixSort(columna, forma);
+        generarCSV("RadixSort_Ordenado.csv", lista);
+        comparaciones = Integer.toString(rSort.getComparaciones());
+        intercambios = Integer.toString(rSort.getIntercambios());
+        tiempoTotalS = Long.toString(tiempoTotal);
+        metricas.add(new String[] {"RadixSort", comparaciones, intercambios, tiempoTotalS});
 
         generarMetricas();
     }
