@@ -11,6 +11,8 @@ import java.util.Scanner;
 
 import src.Algoritmos.BinaryInsertionSort;
 import src.Algoritmos.QuickSort;
+import src.Algoritmos.MergeSort;
+import src.Algoritmos.RadixSort;
 import src.DAO.DAO;
 import src.Modelo.Auto;
 
