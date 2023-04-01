@@ -14,7 +14,7 @@ Primero escribiremos:
 ```
 Posteriormente escribiremos:
 ```ssh
-    javac IniciarApp
+    java src/IniciarApp/IniciarApp
 ```
 y el programa empezará a ejecutarse
 
